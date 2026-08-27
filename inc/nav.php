@@ -1,4 +1,4 @@
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="<?=Base_URL?>index.php">EraaSoft PMS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -6,9 +6,15 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?=Base_URL?>index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product.php">Product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product-create.php">Create Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product_crud/product-create.php">Create Product</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/about.php">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Contact</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Orders</a></li>
+
+                                        <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/register.php">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/logout.php">Logout</a></li>
+
                 </ul>
                 <form class="d-flex" action="<?=Base_URL?>views/cart.php">
                     <button class="btn btn-outline-dark" type="submit">
