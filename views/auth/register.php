@@ -1,7 +1,5 @@
 <?php
-include dirname(__FILE__, 2) . '/inc/header.php';
-include dirname(__FILE__, 2) . '/core/functions.php';
-
+include dirname(__FILE__, 3) . '/inc/header.php';
 ?>
     <!-- Navigation-->
 
@@ -9,13 +7,11 @@ include dirname(__FILE__, 2) . '/core/functions.php';
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                <h1 class="display-4 fw-bolder">Register</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Please register to continue</p>
             </div>
         </div>
     </header>
-    <?= showmessage('success') ?>
-
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -25,24 +21,22 @@ include dirname(__FILE__, 2) . '/core/functions.php';
                         <div class="mb-3">
                             <div class="mb-3">
                                 <label for="">Name</label>
-                                <input type="text" name="name" id="" class="form-control">
-                                                    <?= showmessage('error','name') ?>
-
+                                <input type="text" name="" id="" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="">Email</label>
-                                <input type="email" name="email" id="" class="form-control">
-                                                    <?= showmessage('error','email') ?>
-
+                                <input type="email" name="" id="" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label for="">Message</label>
-                                <textarea name="message" id="" class="form-control" rows="7"></textarea>
-                                                    <?= showmessage('error','message') ?>
-
+                                <label for="">Password</label>
+                                <input type="password" name="" id="" class="form-control">
+                            </div>
+                             <div class="mb-3">
+                                <label for="">Confirm Password</label>
+                                <input type="password" name="" id="" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <input type="submit" value="Send" id="" class="btn btn-success">
+                                <input type="submit" value="Register" id="" class="btn btn-success">
                             </div>
                         </div>
                     </form>
@@ -52,5 +46,5 @@ include dirname(__FILE__, 2) . '/core/functions.php';
     </section>
     <!-- Footer-->
 <?php
-include dirname(__FILE__, 2) . '/inc/footer.php';
+include dirname(__FILE__, 3) . '/inc/footer.php';
 ?>

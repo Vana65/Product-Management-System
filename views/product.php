@@ -1,8 +1,12 @@
 <?php
 
 include dirname(__FILE__, 2) . '/inc/header.php';
+include dirname(__FILE__, 2) . '/core/functions.php';
 
+$products = get_datajson();
+$lastProduct = !empty($products) ? end($products) : null;
 ?>
+
     <!-- Navigation-->
  
     <header class="bg-dark py-5">
@@ -13,21 +17,18 @@ include dirname(__FILE__, 2) . '/inc/header.php';
             </div>
         </div>
     </header>
-
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
                     <div class="card shadow-sm">
-                        <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="Product image" />
+                        <img class="card-img-top mb-5 mb-md-0" src="<?= Base_URL ?>assets/img/<?= htmlspecialchars($lastProduct['photo']) ?>" alt="Product image" />
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="small mb-1">SKU: BST-498</div>
-                    <h1 class="display-5 fw-bolder">Shop item template</h1>
+                    <h1 class="display-5 fw-bolder"><?= htmlspecialchars($lastProduct['product_name']) ?></h1>
                     <div class="fs-5 mb-3">
-                        <span class="text-decoration-line-through text-muted">$45.00</span>
-                        <span class="ms-2">$40.00</span>
+                        $<?= number_format($lastProduct['price'], 2) ?>
                     </div>
                     <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero.</p>
 
@@ -49,7 +50,7 @@ include dirname(__FILE__, 2) . '/inc/header.php';
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button class="btn btn-dark" type="button">Buy Now</button>
+                        <button class="btn btn-dark" type="button" href="<?=Base_URL?>views/order.php">Buy Now</button>
                         <button class="btn btn-outline-secondary" type="button">Save for Later</button>
                     </div>
                 </div>
@@ -77,29 +78,15 @@ include dirname(__FILE__, 2) . '/inc/header.php';
         <div class="container px-4 px-lg-5 mt-5">
             <h2 class="fw-bolder mb-4">Related products</h2>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <?php foreach ($products as $product) { ?>
+
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <img class="card-img-top" src="<?= Base_URL ?>assets/img/<?= htmlspecialchars($product['photo']) ?>" alt="..." />
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <h5 class="fw-bolder">Fancy Product</h5>
-                                $40.00
-                            </div>
-                        </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product.php">View item</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <h5 class="fw-bolder">Special Item</h5>
-                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                $18.00
+                                <h5 class="fw-bolder"><?= htmlspecialchars($product['product_name']) ?></h5>
+                                $<?= number_format($product['price'], 2) ?>
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -107,36 +94,7 @@ include dirname(__FILE__, 2) . '/inc/header.php';
                         </div>
                     </div>
                 </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <h5 class="fw-bolder">Sale Item</h5>
-                                <span class="text-muted text-decoration-line-through">$50.00</span>
-                                $25.00
-                            </div>
-                        </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product.php">Add to cart</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <h5 class="fw-bolder">Popular Item</h5>
-                                $40.00
-                            </div>
-                        </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product.php">Add to cart</a></div>
-                        </div>
-                    </div>
-                </div>
+<?php } ?>
             </div>
         </div>
     </section>
