@@ -28,17 +28,13 @@ function showmessage($type = null, $field = null)
 
     // Validation errors
     if ($type === 'error' && !empty($_SESSION['errors'])) {
-
-        foreach ($_SESSION['errors'] as $error) {
-
-            if ($field !== null && stripos($error, $field) !== false) {
-
-                echo "<div class='text-danger mt-1'>$error</div>";
-
-                break;
+        if ($field === null) {
+            foreach ($_SESSION['errors'] as $error) {
+                echo "<div class='text-danger mt-1'>" . htmlspecialchars($error, ENT_QUOTES, 'UTF-8') . "</div>";
             }
+        } elseif (isset($_SESSION['errors'][$field])) {
+            echo "<div class='text-danger mt-1'>" . htmlspecialchars($_SESSION['errors'][$field], ENT_QUOTES, 'UTF-8') . "</div>";
         }
-
     }
 
     return "";
