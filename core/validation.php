@@ -110,6 +110,32 @@ function validate_product_data( $product_name, $category, $price, $stock, $photo
 
     return $errors;
 }
+function validate_contact_data($name,$email,$message) {
+
+    $errors = [];
+
+    $data = [
+        'name' => $name,
+        'email' => $email,
+        'message' => $message
+    ];
+
+    foreach ($data as $field => $value) {
+
+        if (empty($value)) {
+            $errors[$field] = ucfirst($field) . " is required.";
+        }
+    }
+
+    if (!empty($email)) {
+        $error = validate_email($email);
+
+        if ($error) {
+            $errors['email'] = $error;
+        }
+    }
+    return $errors;
+}
 
 
 ?>

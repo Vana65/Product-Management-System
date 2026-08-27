@@ -30,10 +30,10 @@ function showmessage($type = null, $field = null)
     if ($type === 'error' && !empty($_SESSION['errors'])) {
         if ($field === null) {
             foreach ($_SESSION['errors'] as $error) {
-                echo "<div class='text-danger mt-1'>" . htmlspecialchars($error, ENT_QUOTES, 'UTF-8') . "</div>";
+                echo "<div class='text-danger mt-1'>" . htmlspecialchars($error, ENT_QUOTES) . "</div>";
             }
         } elseif (isset($_SESSION['errors'][$field])) {
-            echo "<div class='text-danger mt-1'>" . htmlspecialchars($_SESSION['errors'][$field], ENT_QUOTES, 'UTF-8') . "</div>";
+            echo "<div class='text-danger mt-1'>" . htmlspecialchars($_SESSION['errors'][$field], ENT_QUOTES) . "</div>";
         }
     }
 
@@ -79,5 +79,39 @@ return [];
 
 }
 //contact function
+function add_contact($name,$email,$message)
+{
+    $contact = Base_Path . "data/contact.json";
 
+    if (file_exists($contact)) {
+        $contacts = json_decode(file_get_contents($contact), true) ?? [];
+    } else {
+        $contacts = [];
+    }
+
+    $add = [
+        'id' => count($contacts) + 1,
+        'name' => $name,
+        'email' => $email,
+        'message' => $message
+        
+    ];
+
+    $contacts[] = $add;
+
+    return file_put_contents(
+        $contact,
+        json_encode($contacts, JSON_PRETTY_PRINT)
+    ) !== false;
+}
+
+function get_contactjson() {
+$contact = Base_Path . "data/contact.json";
+if (file_exists($contact)) {
+    return json_decode(file_get_contents($contact), true);
+
+}
+return [];
+
+}
 ?>
