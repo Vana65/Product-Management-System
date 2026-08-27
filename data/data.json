@@ -88,5 +88,15 @@
         "photo": "image_6a9073abe744a.jpg",
         "description": "Perspiciatis quas v",
         "status": "inactive"
+    },
+    {
+        "id": 10,
+        "product_name": "Audra Edwards",
+        "category": "5",
+        "price": "381",
+        "stock": "239",
+        "photo": "image_6a90820e459a4.jpg",
+        "description": "Deleniti optio ut d",
+        "status": "active"
     }
 ]

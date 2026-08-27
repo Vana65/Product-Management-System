@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 
@@ -21,7 +23,7 @@ include dirname(__FILE__, 2) . '/core/functions.php';
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row">
                 <div class="col-8 mx-auto">
-                    <form action="" class="form border my-2 p-3">
+                    <form action="<?= Base_URL ?>handler/contact_handler/create_contact.php" method="post" class="form border my-2 p-3">
                         <div class="mb-3">
                             <div class="mb-3">
                                 <label for="">Name</label>
@@ -52,5 +54,6 @@ include dirname(__FILE__, 2) . '/core/functions.php';
     </section>
     <!-- Footer-->
 <?php
+unset($_SESSION['errors']);
 include dirname(__FILE__, 2) . '/inc/footer.php';
 ?>
