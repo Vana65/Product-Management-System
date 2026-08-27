@@ -33,7 +33,7 @@ function validate_photo($photo)
         return "File size exceeds the maximum limit of 2MB.";
     }
 
-    $ext = pathinfo($photo['full_path'], PATHINFO_EXTENSION);
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION);
 
     $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 

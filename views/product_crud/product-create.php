@@ -94,7 +94,7 @@ $error = $_SESSION['errors'] ?? [];
         </div>
     </div>
 <?php
-unset($_SESSION['error']);
+unset($_SESSION['errors']);
 ?>
     <!-- Footer-->
 <?php
