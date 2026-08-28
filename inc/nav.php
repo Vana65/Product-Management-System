@@ -5,17 +5,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?=Base_URL?>index.php">Home</a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/about.php">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Contact</a></li>
+<?php if (isset($_SESSION['user'])): ?>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product.php">Product</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product_crud/product-create.php">Create Product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/about.php">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Contact</a></li>
                                         <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Orders</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>handler/auth/logout.php">Logout</a></li>
+<?php else: ?>
+           <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/login.php">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/register.php">Register</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/logout.php">Logout</a></li>
-
+<?php endif; ?>
                 </ul>
+                
                 <form class="d-flex" action="<?=Base_URL?>views/cart.php">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>

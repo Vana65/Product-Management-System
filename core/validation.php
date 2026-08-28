@@ -57,6 +57,32 @@ if (!preg_match('/^\+?[0-9]{10,15}$/', $phone)) {
     }
     return "";
 }
+function validate_password($password) {
+    if (strlen($password) < 8) {
+        return "Password must be at least 8 characters long.";
+    }
+    if (!preg_match('/[A-Z]/', $password)) {
+        return "Password must contain at least one uppercase letter.";
+    }
+    if (!preg_match('/[a-z]/', $password)) {
+        return "Password must contain at least one lowercase letter.";
+    }
+    if (!preg_match('/[0-9]/', $password)) {
+        return "Password must contain at least one number.";
+    }
+    if (!preg_match('/[\W_]/', $password)) {
+        return "Password must contain at least one special character.";
+    }
+    return "";
+}
+function validate_passwordmatch($password,$confirm_password)
+{
+    if ($password !== $confirm_password) {
+        return "Passwords do not match.";
+    }
+        return "";
+    
+}
 function add_error(&$errors, $error)
 {
     if ($error) {
@@ -136,6 +162,78 @@ function validate_contact_data($name,$email,$message) {
     }
     return $errors;
 }
+function validate_register_data($name, $email, $password, $confirm_password)
+{
+    $errors = [];
+
+    $data = [
+        'name' => $name,
+        'email' => $email,
+        'password' => $password,
+        'confirm_password' => $confirm_password
+    ];
+
+    foreach ($data as $field => $value) {
+        if (empty($value)) {
+            $errors[$field] = ucfirst($field) . " is required.";
+        }
+    }
+
+    if (!empty($email)) {
+        $error = validate_email($email);
+
+        if ($error) {
+            $errors['email'] = $error;
+        }
+    }
+
+    if (!empty($password)) {
+        $error = validate_password($password);
+
+        if ($error) {
+            $errors['password'] = $error;
+        }
+    }
+
+    if (!empty($confirm_password) && !empty($password)) {
+        $error = validate_passwordmatch($password, $confirm_password);
+
+        if ($error) {
+            $errors['confirm_password'] = $error;
+        }
+    }
+
+    return $errors;
+}
+function validate_login_data($email, $password)
+{
+    $errors = [];
+
+    $data = [
+       
+        'email' => $email,
+        'password' => $password,
+    ];
+
+    foreach ($data as $field => $value) {
+        if (empty($value)) {
+            $errors[$field] = ucfirst($field) . " is required.";
+        }
+    }
+
+    if (!empty($email)) {
+        $error = validate_email($email);
+
+        if ($error) {
+            $errors['email'] = $error;
+        }
+    }
+
+
+    return $errors;
+}
+
+
 
 
 ?>
