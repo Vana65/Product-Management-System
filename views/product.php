@@ -47,7 +47,7 @@ check_authentication();
 
                     <div class="d-flex mb-4">
                         <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 5rem" />
-                        <a class="btn btn-outline-dark flex-shrink-0" href="<?= Base_URL ?>views/cart.php">
+                        <a class="btn btn-outline-dark flex-shrink-0" href="<?= Base_URL ?>handler/cart_handler/add_cart.php?id=<?= $lastProduct['id'] ?>">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
                         </a>
