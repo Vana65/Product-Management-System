@@ -1,93 +1,148 @@
 <?php
+
 session_start();
+
 include dirname(__FILE__, 2) . '/inc/header.php';
+include dirname(__FILE__, 2) . '/core/functions.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: " . Base_URL . "views/auth/login.php");
-    exit;
-}
+check_authentication();
+
+
+$products = get_datajson();
+
+$cart = $_SESSION['cart'] ?? [];
+
+$totalPrice = 0;
+
 ?>
-    <!-- Navigation-->
 
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-            </div>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Your Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0">
+                Your selected products
+            </p>
         </div>
-    </header>
-    <!-- Section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-bordered">
-                        <thead>
+    </div>
+</header>
+
+<!-- Cart -->
+<section class="py-5">
+
+    <div class="container px-4 px-lg-5 mt-5">
+
+        <div class="row">
+
+            <div class="col-12">
+
+                <table class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <?php if (empty($cart)): ?>
+
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                Your cart is empty
+                            </td>
+                        </tr>
+
+                    <?php else: ?>
+
+                        <?php
+                        $index = 1;
+                        ?>
+
+                        <?php foreach ($products as $product): ?>
+
+                            <?php
+
+                            $productId = $product['id'];
+
+                            // هل المنتج موجود في cart؟
+                            if (isset($cart[$productId])):
+
+                                $quantity = $cart[$productId];
+
+                                $price = (float) $product['price'];
+
+                                $productTotal = $price * $quantity;
+
+                                $totalPrice += $productTotal;
+
+                            ?>
+
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Delete</th>
+
+                                <th scope="row">
+                                    <?= $index++ ?>
+                                </th>
+
+                                <td>
+                                    <?= htmlspecialchars($product['product_name']) ?>
+                                </td>
+
+                                <td>
+                                    $<?= number_format($price, 2) ?>
+                                </td>
+
+                                <td>
+
+                                    <input
+                                        type="number"
+                                        value="<?= $quantity ?>"
+                                        min="1"
+                                        class="form-control"
+                                        style="width: 80px;"
+                                    >
+
+                                </td>
+
+                                <td><?= number_format($productTotal, 2) ?></td>
+                                <td><a href="<?= Base_URL ?>handler/cart_handler/delete_cart.php?id=<?= $productId ?>" class="btn btn-danger">Delete</a></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Product 1</td>
-                                <td>$9.99</td>
-                                <td>
-                                    <input type="number" value="1">
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Product 2</td>
-                                <td>$19.99</td>
-                                <td>
-                                    <input type="number" value="2">
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Product 2</td>
-                                <td>$19.99</td>
-                                <td>
-                                    <input type="number" value="2">
-                                </td>
-                                <td>$9.99</td>
-                                <td>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    Tatal Price
-                                </td>
-                                <td colspan="3">
-                                    <h3>3325 $</h3>
-                                </td>
-                                <td>
-                                    <a href="checkout.php" class="btn btn-primary">Checkout</a>
-                                </td>
-                            </tr>
-                    </table>
-                </div>
-            </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <tr>
+
+                            <td colspan="2"><strong>Total Price</strong> </td>
+                            <td colspan="3">
+                                <h3><?= number_format($totalPrice, 2) ?> </h3>
+                            </td>
+
+                            <td>
+
+                                <a href="checkout.php"class="btn btn-primary">Checkout</a>
+
+                            </td>
+
+                        </tr>
+
+                    <?php endif; ?>
+
+                    </tbody>
+                </table>
+                            </div>
         </div>
-    </section>
-    <!-- Footer-->
+    </div>
+
+</section>
+
 <?php
+
 include dirname(__FILE__, 2) . '/inc/footer.php';
+
 ?>

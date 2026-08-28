@@ -6,10 +6,8 @@ include dirname(__FILE__, 2) . '/core/functions.php';
 $products = get_datajson();
 $lastProduct = !empty($products) ? end($products) : null;
 
-if (!isset($_SESSION['user'])) {
-    header("Location: " . Base_URL . "views/auth/login.php");
-    exit;
-}
+check_authentication();
+
 
 ?>
 
@@ -96,7 +94,7 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<?= Base_URL ?>views/cart.php">Add to cart</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<?= Base_URL ?>handler/cart_handler/add_cart.php?id=<?= $product['id'] ?>">Add to cart</a></div>
                         </div>
                     </div>
                 </div>

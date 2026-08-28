@@ -2,10 +2,9 @@
 session_start();
 
 include dirname(__FILE__, 2) . '/inc/header.php';
-if (!isset($_SESSION['user'])) {
-    header("Location: " . Base_URL . "views/auth/login.php");
-    exit;
-}
+include dirname(__FILE__, 2) . '/core/functions.php';
+check_authentication();
+
 ?>
     <!-- Navigation-->
     <!-- Header-->
