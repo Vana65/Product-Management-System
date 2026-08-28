@@ -1,5 +1,4 @@
 <?php
-
 //general finction
 function setmessage($message, $type)
 {
@@ -101,8 +100,7 @@ function add_contact($name,$email,$message)
 
     return file_put_contents(
         $contact,
-        json_encode($contacts, JSON_PRETTY_PRINT)
-    ) !== false;
+        json_encode($contacts, JSON_PRETTY_PRINT),true);
 }
 
 function get_contactjson() {
@@ -114,4 +112,56 @@ if (file_exists($contact)) {
 return [];
 
 }
+
+function add_client($name, $email, $password){
+    
+    $client = Base_Path . "data/client.json";
+
+    if (file_exists($client)) {
+        $clients = json_decode(file_get_contents($client), true) ?? [];
+    } else {
+        $clients = [];
+    }
+
+    $add = [
+        'id' => count($clients) + 1,
+        'name' => $name,
+        'email' => $email,
+        'password' => password_hash($password, PASSWORD_DEFAULT)
+        
+    ];
+
+    $clients[] = $add;
+
+file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
+
+    $_SESSION['user'] = [
+        'name' => $name,
+        'email' => $email
+    ];
+    return true;
+
+}
+
+  function login_user($email, $password)
+{
+    $jsonFile = Base_Path . "data/client.json";
+    if (file_exists($jsonFile)) {
+        $users = json_decode(file_get_contents($jsonFile), true);
+    } else {
+        return false;
+    }
+    foreach ($users as $user) {
+        if (
+            $user['email'] === $email &&password_verify($password, $user['password'])) {
+            $_SESSION['user'] = [
+                'name' => $user['name'],
+                'email' => $user['email']
+            ];
+            return true;
+        }
+    }
+    return false;
+}
+
 ?>
