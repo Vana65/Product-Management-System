@@ -4,9 +4,14 @@ session_start();
 require_once dirname(__FILE__, 3) . '/core/functions.php';
 require_once dirname(__FILE__, 3) . '/inc/header.php';
 $error = $_SESSION['errors'] ?? [];
+
+if (!isset($_SESSION['user'])) {
+    header("Location: " . Base_URL . "views/auth/login.php");
+    exit;
+}
+
+
 ?>
-
-
 
     <!-- Navigation-->
 

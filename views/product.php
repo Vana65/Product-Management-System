@@ -1,10 +1,16 @@
 <?php
-
+session_start();
 include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 
 $products = get_datajson();
 $lastProduct = !empty($products) ? end($products) : null;
+
+if (!isset($_SESSION['user'])) {
+    header("Location: " . Base_URL . "views/auth/login.php");
+    exit;
+}
+
 ?>
 
     <!-- Navigation-->
@@ -43,14 +49,14 @@ $lastProduct = !empty($products) ? end($products) : null;
 
                     <div class="d-flex mb-4">
                         <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 5rem" />
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <a class="btn btn-outline-dark flex-shrink-0" href="<?= Base_URL ?>views/cart.php">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
-                        </button>
+                        </a>
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button class="btn btn-dark" type="button" href="<?=Base_URL?>views/order.php">Buy Now</button>
+                        <a class="btn btn-dark" href="<?=Base_URL?>views/order.php">Buy Now</a>
                         <button class="btn btn-outline-secondary" type="button">Save for Later</button>
                     </div>
                 </div>
@@ -90,7 +96,7 @@ $lastProduct = !empty($products) ? end($products) : null;
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product.php">Add to cart</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<?= Base_URL ?>views/cart.php">Add to cart</a></div>
                         </div>
                     </div>
                 </div>
