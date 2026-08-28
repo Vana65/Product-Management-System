@@ -163,5 +163,12 @@ file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
     }
     return false;
 }
+function check_authentication()
+{
+    if (!isset($_SESSION['user'])) {
+        header("Location: " . Base_URL . "views/auth/login.php");
+        exit;
+    }
+}
 
 ?>

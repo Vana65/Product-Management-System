@@ -4,6 +4,8 @@ session_start();
 include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 
+check_authentication();
+
 ?>
     <!-- Navigation-->
 
