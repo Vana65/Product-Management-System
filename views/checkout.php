@@ -4,6 +4,11 @@ session_start();
 include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 check_authentication();
+$products = get_datajson();
+
+$cart = $_SESSION['cart'] ?? [];
+
+$totalPrice = 0;
 
 ?>
     <!-- Navigation-->
@@ -17,6 +22,9 @@ check_authentication();
             </div>
         </div>
     </header>
+
+    <?= showmessage('success') ?>
+    
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -25,59 +33,84 @@ check_authentication();
                     <div class="border p-2">
                         <div class="products">
                             <ul class="list-unstyled">
-                                <li class="border p-2 my-1"> Product #1 -
-                                    <span class="text-success mx-2 mr-auto bold">2 x 25$</span>
+                                <?php foreach ($products as $product): ?>
+                                    <?php
+    $productId = $product['id'];
+
+    if (isset($cart[$productId])):
+
+        $quantity = $cart[$productId];
+
+        $price = (float) $product['price'];
+
+        $productTotal = $quantity * $price;
+
+        $totalPrice += $productTotal;
+    ?>
+                                <li class="border p-2 my-1"><?= htmlspecialchars($product['product_name']) ?>
+
+                                    <span class="text-success mx-2 mr-auto bold"><?= $quantity ?> x $<?= $price ?></span>
                                 </li>
-                                <li class="border p-2 my-1"> Product #1 -
-                                    <span class="text-success mx-2 mr-auto bold">2 x 25$</span>
-                                </li>
-                                <li class="border p-2 my-1"> Product #1 -
-                                    <span class="text-success mx-2 mr-auto bold">2 x 25$</span>
-                                </li>
-                                <li class="border p-2 my-1"> Product #1 -
-                                    <span class="text-success mx-2 mr-auto bold">2 x 25$</span>
-                                </li>
-                                <li class="border p-2 my-1"> Product #1 -
-                                    <span class="text-success mx-2 mr-auto bold">2 x 25$</span>
-                                </li>
+
+                                                            <?php endif; ?>
+
+<?php endforeach; ?>
                             </ul>
                         </div>
-                        <h3>Total : 644 $</h3>
+
+                        <h3>Total : <?= $totalPrice ?></h3>
                     </div>
                 </div>
-                <div class="col-8">
-                    <form action="" class="form border my-2 p-3">
-                        <div class="mb-3">
-                            <div class="mb-3">
-                                <label for="">Name</label>
-                                <input type="text" name="" id="" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Email</label>
-                                <input type="email" name="" id="" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Address</label>
-                                <input type="text" name="" id="" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Phone</label>
-                                <input type="number" name="" id="" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Notes</label>
-                                <input type="text" name="" id="" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <input type="submit" value="Send" id="" class="btn btn-success">
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div class="col-8">
+    <form action="<?= Base_URL ?>handler/checkout_handler/create_checkout.php"
+          method="POST"
+          class="form border my-2 p-3">
+
+        <div class="mb-3">
+
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="form-control">
+                <?= showmessage('error', 'name') ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control">
+                <?= showmessage('error', 'email') ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" class="form-control">
+                <?= showmessage('error', 'address') ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" id="phone" class="form-control">
+                <?= showmessage('error', 'phone') ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="note">Notes</label>
+                <input type="text" name="note" id="note" class="form-control">
+                <?= showmessage('error', 'note') ?>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Send" class="btn btn-success">
+            </div>
+
+        </div>
+    </form>
+</div>
             </div>
         </div>
     </section>
     <!-- Footer-->
 <?php
+unset($_SESSION['errors']);
+
 include dirname(__FILE__, 2) . '/inc/footer.php';
 ?>

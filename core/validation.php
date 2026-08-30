@@ -232,7 +232,42 @@ function validate_login_data($email, $password)
 
     return $errors;
 }
+function validate_checkout_data($name, $email, $phone, $address , $note)
+{
+    $errors = [];
 
+    $data = [
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone,
+        'address' => $address,
+        'note' => $note
+    ];
+
+    foreach ($data as $field => $value) {
+        if (empty($value)) {
+            $errors[$field] = ucfirst($field) . " is required.";
+        }
+    }
+
+    if (!empty($email)) {
+        $error = validate_email($email);
+
+        if ($error) {
+            $errors['email'] = $error;
+        }
+    }
+
+    if (!empty($phone)) {
+        $error = validate_phone($phone);
+
+        if ($error) {
+            $errors['phone'] = $error;
+        }
+    }
+
+    return $errors;
+}
 
 
 

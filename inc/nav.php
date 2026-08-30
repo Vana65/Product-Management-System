@@ -10,7 +10,7 @@
 <?php if (isset($_SESSION['user'])): ?>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product.php">Product</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/product_crud/product-create.php">Create Product</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/contact.php">Orders</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/order.php">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>handler/auth/logout.php">Logout</a></li>
 <?php else: ?>
            <li class="nav-item"><a class="nav-link" href="<?=Base_URL?>views/auth/login.php">Login</a></li>
