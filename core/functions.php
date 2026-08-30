@@ -170,5 +170,31 @@ function check_authentication()
         exit;
     }
 }
+function add_checkout($name, $email, $address, $phone, $note){
+    
+    $checkout = Base_Path . "data/checkout.json";
+
+    if (file_exists($checkout)) {
+        $checkouts = json_decode(file_get_contents($checkout), true) ?? [];
+    } else {
+        $checkouts = [];
+    }
+
+    $add = [
+        'id' => count($checkouts) + 1,
+        'name' => $name,
+        'email' => $email,
+        'address' => $address,
+        'phone' => $phone,
+        'note' => $note
+    ];
+
+    $checkouts[] = $add;
+
+    return file_put_contents(
+        $checkout,
+        json_encode($checkouts, JSON_PRETTY_PRINT)
+    );
+}
 
 ?>

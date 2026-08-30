@@ -5,6 +5,12 @@ include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 
 check_authentication();
+$products = get_datajson();
+
+$cart = $_SESSION['cart'] ?? [];
+
+$totalPrice = 0;
+
 ?>
 
 <!-- Header -->
@@ -62,31 +68,34 @@ check_authentication();
             </thead>
 
             <tbody>
+                                        <?php $index = 1;?>
 
+                               <?php foreach ($products as $product): ?>
+                                    <?php
+    $productId = $product['id'];
+
+    if (isset($cart[$productId])):
+
+        $quantity = $cart[$productId];
+
+        $price = (float) $product['price'];
+
+        $productTotal = $quantity * $price;
+
+        $totalPrice += $productTotal;
+    ?>
                 <tr>
-                    <td>1</td>
-                    <td>Product #1</td>
-                    <td>2</td>
-                    <td>$25.00</td>
-                    <td>$50.00</td>
+                    <td><?= $index++ ?></td>
+                    <td><?= htmlspecialchars($product['product_name']) ?></td>
+                    <td><?= $quantity ?></td>
+                    <td>$<?= $price ?></td>
+                    <td>$<?= $productTotal ?></td>
                 </tr>
 
-                <tr>
-                    <td>2</td>
-                    <td>Product #2</td>
-                    <td>3</td>
-                    <td>$40.00</td>
-                    <td>$120.00</td>
-                </tr>
 
-                <tr>
-                    <td>3</td>
-                    <td>Product #3</td>
-                    <td>1</td>
-                    <td>$35.00</td>
-                    <td>$35.00</td>
-                </tr>
+                <?php endif; ?>
 
+<?php endforeach; ?>
             </tbody>
 
             <tfoot>
@@ -96,7 +105,7 @@ check_authentication();
                     </th>
 
                     <th>
-                        $205.00
+                        $<?= $totalPrice ?>
                     </th>
                 </tr>
             </tfoot>
@@ -104,14 +113,7 @@ check_authentication();
         </table>
 
 
-        <!-- Checkout -->
-        <div class="text-end mt-3">
 
-            <a href="checkout.php" class="btn btn-primary">
-                Checkout Now
-            </a>
-
-        </div>
 
     </div>
 </section>
