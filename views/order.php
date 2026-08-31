@@ -6,6 +6,8 @@ include dirname(__FILE__, 2) . '/core/functions.php';
 
 check_authentication();
 $products = get_datajson();
+$checkouts = get_checkoutjson();
+
 
 $cart = $_SESSION['cart'] ?? [];
 
@@ -33,24 +35,24 @@ $totalPrice = 0;
 
         <!-- Customer Information -->
         <h4 class="mb-3">Customer Information</h4>
-
+<?php foreach ($checkouts as $checkout): ?>
         <table class="table table-bordered">
             <tr>
                 <th>Name</th>
-                <td>John Doe</td>
+                <td><?= $checkout['name'] ?></td>
             </tr>
 
             <tr>
                 <th>Address</th>
-                <td>Hurghada, Red Sea, Egypt</td>
+                <td><?= $checkout['address'] ?></td>
             </tr>
 
             <tr>
                 <th>Phone</th>
-                <td>01012345678</td>
+                <td><?= $checkout['phone'] ?></td>
             </tr>
         </table>
-
+<?php endforeach; ?>
 
         <!-- Order Details -->
         <h4 class="mb-3 mt-5">Order Details</h4>

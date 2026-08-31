@@ -170,18 +170,12 @@ function check_authentication()
         exit;
     }
 }
-function add_checkout($name, $email, $address, $phone, $note){
-    
+function add_checkout($name, $email, $address, $phone, $note)
+{
     $checkout = Base_Path . "data/checkout.json";
 
-    if (file_exists($checkout)) {
-        $checkouts = json_decode(file_get_contents($checkout), true) ?? [];
-    } else {
-        $checkouts = [];
-    }
-
     $add = [
-        'id' => count($checkouts) + 1,
+        'id' => 1,
         'name' => $name,
         'email' => $email,
         'address' => $address,
@@ -189,12 +183,17 @@ function add_checkout($name, $email, $address, $phone, $note){
         'note' => $note
     ];
 
-    $checkouts[] = $add;
-
     return file_put_contents(
         $checkout,
-        json_encode($checkouts, JSON_PRETTY_PRINT)
-    );
+        json_encode([$add], JSON_PRETTY_PRINT));
 }
+function get_checkoutjson() {
+$checkout = Base_Path . "data/checkout.json";
+if (file_exists($checkout)) {
+    return json_decode(file_get_contents($checkout), true);
 
+}
+return [];
+
+}
 ?>

@@ -15,7 +15,6 @@ include dirname(__FILE__, 3) . '/core/functions.php';
             </div>
         </div>
     </header>
-            <?= showmessage('success') ?>
 
     <!-- Section-->
     <section class="py-5">
