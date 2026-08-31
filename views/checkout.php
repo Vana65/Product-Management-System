@@ -6,6 +6,7 @@ include dirname(__FILE__, 2) . '/core/functions.php';
 check_authentication();
 $products = get_datajson();
 
+
 $cart = $_SESSION['cart'] ?? [];
 
 $totalPrice = 0;

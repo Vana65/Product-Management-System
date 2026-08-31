@@ -98,5 +98,15 @@
         "photo": "image_6a90820e459a4.jpg",
         "description": "Deleniti optio ut d",
         "status": "active"
+    },
+    {
+        "id": 11,
+        "product_name": "Harlan Cortez",
+        "category": "4",
+        "price": "149",
+        "stock": "991",
+        "photo": "image_6a9603b8803dd.jpg",
+        "description": "Atque dolorem facili",
+        "status": "inactive"
     }
 ]

@@ -28,7 +28,7 @@ $addclient = add_client($name, $email, $password);
 
 if ($addclient) {
     setmessage("your register is successfully", 'success');
-    header("Location: " . Base_URL . "views/auth/register.php");
+    header("Location: " . Base_URL . "index.php");
     exit();
 }
 
