@@ -20,7 +20,9 @@ check_authentication();
             </div>
         </div>
     </header>
-<?= showmessage('success') ?>
+
+    <?= showmessage('success') ?>
+
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">

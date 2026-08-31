@@ -15,6 +15,9 @@ $products = get_datajson();
             </div>
         </div>
     </header>
+    
+    <?= showmessage('success') ?>
+    
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
