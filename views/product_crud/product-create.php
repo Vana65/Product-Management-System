@@ -91,7 +91,7 @@ check_authentication();
 
                     <div class="d-flex gap-2">
                         <input type="submit"  href="<?= Base_URL ?>views/product.php" value="Add Product" class="btn btn-primary px-4">
-                        <a href="<?= Base_URL ?>views/product_crud/product_create.php" class="btn btn-outline-secondary">Cancel</a>
+                        <a href="<?= Base_URL ?>views/product_crud/product-create.php" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
