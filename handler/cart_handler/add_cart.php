@@ -7,7 +7,6 @@ require_once dirname(__FILE__, 3) . '/core/functions.php';
 
 check_authentication();
 
-
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
@@ -15,21 +14,25 @@ if (!$id) {
     exit;
 }
 
-// لو مفيش cart اعمله
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+$userId = $_SESSION['user']['id'];
+
+// لو مفيش cart للمستخدم ده اعملها
+if (!isset($_SESSION['cart'][$userId])) {
+    $_SESSION['cart'][$userId] = [];
 }
 
 // لو المنتج موجود زود الكمية
-if (isset($_SESSION['cart'][$id])) {
+if (isset($_SESSION['cart'][$userId][$id])) {
 
-    $_SESSION['cart'][$id]++;
+    $_SESSION['cart'][$userId][$id]++;
 
 } else {
 
     // أول مرة يتضاف
-    $_SESSION['cart'][$id] = 1;
+    $_SESSION['cart'][$userId][$id] = 1;
 }
+
+save_user_cart($userId, $_SESSION[' cart'][$userId]);
 
 header("Location: " . Base_URL . "views/cart.php");
 exit;

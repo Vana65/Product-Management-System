@@ -223,7 +223,6 @@ function validate_login_data($email, $password)
 
     if (!empty($email)) {
         $error = validate_email($email);
-
         if ($error) {
             $errors['email'] = $error;
         }

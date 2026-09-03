@@ -9,8 +9,9 @@ $products = get_datajson();
 $checkouts = get_checkoutjson();
 
 
-$cart = $_SESSION['cart'] ?? [];
+$userId = $_SESSION['user']['id'];
 
+$cart = $_SESSION['cart'][$userId] ?? [];
 $totalPrice = 0;
 
 ?>

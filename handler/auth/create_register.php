@@ -24,6 +24,7 @@ if (!empty($errors)) {
     header("Location: " . Base_URL . "views/auth/register.php");
     exit;
 }
+
 $addclient = add_client($name, $email, $password);
 
 if ($addclient) {

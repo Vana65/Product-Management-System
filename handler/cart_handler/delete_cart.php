@@ -14,8 +14,11 @@ if (!$id) {
     exit;
 }
 
-if (isset($_SESSION['cart'][$id])) {
-    unset($_SESSION['cart'][$id]);
+$userId = $_SESSION['user']['id'];
+
+if (isset($_SESSION['cart'][$userId][$id])) {
+    unset($_SESSION['cart'][$userId][$id]);
+    save_user_cart($userId, $_SESSION['cart'][$userId]);
 }
 
 header("Location: " . Base_URL . "views/cart.php");

@@ -2,15 +2,17 @@
 
 session_start();
 
-include dirname(__FILE__, 2) . '/inc/header.php';
 include dirname(__FILE__, 2) . '/core/functions.php';
 
 check_authentication();
 
+include dirname(__FILE__, 2) . '/inc/header.php';
 
 $products = get_datajson();
 
-$cart = $_SESSION['cart'] ?? [];
+$userId = $_SESSION['user']['id'];
+
+$cart = $_SESSION['cart'][$userId] ?? [];
 
 $totalPrice = 0;
 
@@ -59,7 +61,6 @@ $totalPrice = 0;
                         <?php foreach ($products as $product): ?>
                             <?php
                             $productId = $product['id'];
-                            // هل المنتج موجود في cart？
                             if (isset($cart[$productId])):
                                 $quantity = $cart[$productId];
                                 $price = (float) $product['price'];
