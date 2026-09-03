@@ -2,10 +2,8 @@
 session_start();
 require_once dirname(__FILE__, 3) . '/config.php';
 
-$cart = $_SESSION['cart'] ?? [];
-
-unset($_SESSION['user'], $_SESSION['message'], $_SESSION['errors']);
-$_SESSION['cart'] = $cart;
+session_unset();
+session_destroy();
 
 header("Location: " . Base_URL . "views/auth/login.php");
 exit;

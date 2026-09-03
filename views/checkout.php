@@ -7,8 +7,9 @@ check_authentication();
 $products = get_datajson();
 
 
-$cart = $_SESSION['cart'] ?? [];
+$userId = $_SESSION['user']['id'];
 
+$cart = $_SESSION['cart'][$userId] ?? [];
 $totalPrice = 0;
 
 ?>

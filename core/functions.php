@@ -77,6 +77,31 @@ if (file_exists($product)) {
 return [];
 
 }
+
+function get_user_cart($userId)
+{
+    $cartFile = Base_Path . "data/cart.json";
+
+    if (!file_exists($cartFile)) {
+        return [];
+    }
+
+    $carts = json_decode(file_get_contents($cartFile), true) ?? [];
+    return $carts[ $userId] ?? [];
+}
+
+function save_user_cart($userId, $cart)
+{
+    $cartFile = Base_Path . "data/cart.json";
+if (file_exists($cartFile)) {
+    $carts = json_decode(file_get_contents($cartFile), true) ?? [];
+} else {
+    $carts = [];
+}
+    $carts[$userId] = $cart;
+
+    return file_put_contents($cartFile, json_encode($carts, JSON_PRETTY_PRINT)) !== false;
+}
 //contact function
 function add_contact($name,$email,$message)
 {
@@ -123,8 +148,9 @@ function add_client($name, $email, $password){
         $clients = [];
     }
 
+$id = count($clients) + 1;
     $add = [
-        'id' => count($clients) + 1,
+        'id' => $id,
         'name' => $name,
         'email' => $email,
         'password' => password_hash($password, PASSWORD_DEFAULT)
@@ -136,9 +162,12 @@ function add_client($name, $email, $password){
 file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
 
     $_SESSION['user'] = [
+        'id' => $id,
         'name' => $name,
         'email' => $email
     ];
+
+    $_SESSION['cart'][$id] = get_user_cart($id);
     return true;
 
 }
@@ -152,12 +181,15 @@ file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
         return false;
     }
     foreach ($users as $user) {
-        if (
-            $user['email'] === $email &&password_verify($password, $user['password'])) {
+
+        if ($user['email'] === $email && password_verify($password, $user['password'])) {
+            
             $_SESSION['user'] = [
+                'id' => $user['id'],
                 'name' => $user['name'],
                 'email' => $user['email']
             ];
+            $_SESSION['cart'][$user['id']] = get_user_cart($user['id']);
             return true;
         }
     }
@@ -165,7 +197,7 @@ file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
 }
 function check_authentication()
 {
-    if (!isset($_SESSION['user'])) {
+    if (!isset($_SESSION['user']['id'])) {
         header("Location: " . Base_URL . "views/auth/login.php");
         exit;
     }
