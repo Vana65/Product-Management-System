@@ -70,16 +70,6 @@
         "status": "inactive"
     },
     {
-        "id": 8,
-        "product_name": "Chiquita Mckee",
-        "category": "4",
-        "price": "969",
-        "stock": "773",
-        "photo": "image_6a9062b428a10.jpg",
-        "description": "Quis rem non rerum s",
-        "status": "active"
-    },
-    {
         "id": 9,
         "product_name": "Amy House",
         "category": "4",
@@ -100,13 +90,23 @@
         "status": "active"
     },
     {
-        "id": 11,
-        "product_name": "Harlan Cortez",
-        "category": "4",
-        "price": "149",
-        "stock": "991",
-        "photo": "image_6a9603b8803dd.jpg",
-        "description": "Atque dolorem facili",
+        "id": 12,
+        "product_name": "Aquila Barnett",
+        "category": "5",
+        "price": "342",
+        "stock": "77",
+        "photo": "image_6a9b127a2400a.png",
+        "description": "In qui est impedit",
         "status": "inactive"
+    },
+    {
+        "id": 13,
+        "product_name": "Fay Pickett",
+        "category": "4",
+        "price": "633",
+        "stock": "737",
+        "photo": "image_6a9de5a2bc0e2.png",
+        "description": "Repudiandae sed cupi",
+        "status": "active"
     }
 ]
