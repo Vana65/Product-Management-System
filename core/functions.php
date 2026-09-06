@@ -49,8 +49,17 @@ function add_product($product_name, $category, $price, $stock, $photo, $descript
         $products = [];
     }
 
+    $maxId = 0;
+    foreach ($products as $existingProduct) {
+        $existingId = (int) ($existingProduct['id'] ?? 0);
+        if ($existingId > $maxId) {
+            $maxId = $existingId;
+        }
+    }
+
+    $newId = $maxId + 1;
     $add = [
-        'id' => count($products) + 1,
+        'id' => $newId,
         'product_name' => $product_name,
         'category' => $category,
         'price' => $price,
@@ -62,11 +71,7 @@ function add_product($product_name, $category, $price, $stock, $photo, $descript
 
     $products[] = $add;
 
-    return file_put_contents(
-        $product,
-        json_encode($products, JSON_PRETTY_PRINT)
-    ) !== false;
-}
+    return file_put_contents($product,json_encode($products, JSON_PRETTY_PRINT)) !== false;}
 
 function get_datajson() {
 $product = Base_Path . "data/data.json";
@@ -112,9 +117,17 @@ function add_contact($name,$email,$message)
     } else {
         $contacts = [];
     }
+$maxId = 0;
 
+foreach ($contacts as $contact) {
+    if ($contact['id'] > $maxId) {
+        $maxId = $contact['id'];
+    }
+}
+
+$newId = $maxId + 1;
     $add = [
-        'id' => count($contacts) + 1,
+        'id' => $newId,
         'name' => $name,
         'email' => $email,
         'message' => $message
@@ -148,9 +161,17 @@ function add_client($name, $email, $password){
         $clients = [];
     }
 
-$id = count($clients) + 1;
+    $maxId = 0;
+
+    foreach ($clients as $client) {
+        if ($client['id'] > $maxId) {
+            $maxId = $client['id'];
+        }
+    }
+
+    $newId = $maxId + 1;
     $add = [
-        'id' => $id,
+        'id' => $newId,
         'name' => $name,
         'email' => $email,
         'password' => password_hash($password, PASSWORD_DEFAULT)
@@ -162,12 +183,12 @@ $id = count($clients) + 1;
 file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
 
     $_SESSION['user'] = [
-        'id' => $id,
+        'id' => $newId,
         'name' => $name,
         'email' => $email
     ];
 
-    $_SESSION['cart'][$id] = get_user_cart($id);
+    $_SESSION['cart'][$newId] = get_user_cart($newId);
     return true;
 
 }
@@ -183,12 +204,13 @@ file_put_contents($client,json_encode($clients, JSON_PRETTY_PRINT));
     foreach ($users as $user) {
 
         if ($user['email'] === $email && password_verify($password, $user['password'])) {
-            
+
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'name' => $user['name'],
                 'email' => $user['email']
             ];
+            
             $_SESSION['cart'][$user['id']] = get_user_cart($user['id']);
             return true;
         }
@@ -215,9 +237,7 @@ function add_checkout($name, $email, $address, $phone, $note)
         'note' => $note
     ];
 
-    return file_put_contents(
-        $checkout,
-        json_encode([$add], JSON_PRETTY_PRINT));
+    return file_put_contents($checkout,json_encode([$add], JSON_PRETTY_PRINT));
 }
 function get_checkoutjson() {
 $checkout = Base_Path . "data/checkout.json";
